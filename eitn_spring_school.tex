@@ -1,0 +1,89 @@
+% \documentclass[handout]{beamer}
+\documentclass[presentation]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+% \usepackage{pdfpages}
+% \usepackage{pdflscape}
+% \usepackage{lscape}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+% \usepackage{amssymb}
+\usepackage{graphicx}
+% \usepackage{textcomp}
+% \usepackage{arioref}
+% \usepackage{afterpage}
+% \usepackage{subcaption}
+% \usepackage{float}
+% \usepackage{bm}
+\usepackage{tikz}
+% \usepackage{colortbl}
+% \usepackage{caption}
+
+
+% Beamer customization
+\newcommand{\gooditem}[1]{\setbeamercolor{item}{fg=green}\item #1}
+\newcommand{\baditem}[1]{\setbeamercolor{item}{fg=red}\item #1}
+
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+
+\usefonttheme[onlysmall]{structurebold}
+% Use a bold face title font
+\setbeamerfont{title}{series=\bfseries}
+\setbeamerfont{frametitle}{series=\bfseries}
+
+
+% Suppress navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{myred}{RGB}{190,0,0}
+
+
+\graphicspath{{./figures/}}
+
+
+\begin{document}
+
+
+
+
+
+
+\begin{frame}
+% \begin{center}
+    \textbf{\color{myred}\Large How to model effects of uncertain model parameters with Uncertainpy}
+% \end{center}
+
+     \large \vspace{8mm} Simen Tennøe
+
+      \vspace{6mm}
+      \footnotesize Supervisors:
+
+    %
+      \vspace{1mm}
+
+      Gaute Einevoll
+
+      Geir Halnes
+
+      \vspace{5mm}
+    \small University of Oslo, CINPLA
+ %
+ \begin{tikzpicture}[remember picture,overlay]
+    \node [xshift=0.19\paperwidth,yshift=-0.14\paperheight] at (current page.center)
+          {\includegraphics[width = 0.375\paperwidth ]{uncertainpy_small.pdf}};
+  \end{tikzpicture}
+
+  \begin{tikzpicture}[remember picture,overlay]
+    \node [xshift=1.35cm,yshift=0.55cm] at (current page.south west)
+          {\includegraphics[width = 0.2\paperwidth ]{cinpla.png}};
+  \end{tikzpicture}
+
+\end{frame}
+
+
+
+\end{document}
+
