@@ -23,9 +23,9 @@
 % \usepackage{lscape}
 
 % % Change font
-% \usepackage{fontspec}
-% \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-% \setmainfont{Raleway}
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\setmainfont{Raleway}
 % % \setmonofont{Ubuntu Mono}
 
 
@@ -44,6 +44,11 @@
 % Use a bold face title font
 \setbeamerfont{title}{series=\bfseries}
 \setbeamerfont{frametitle}{series=\bfseries}
+
+% Use raleway
+% \usepackage{raleway}
+% \renewcommand{\familydefault}{\sfdefault}
+
 
 \setbeamercolor{frametitle}{fg=black!75!white,bg=white}
 \setbeamercolor{normal text}{fg=black!75!white,bg=white}
@@ -155,7 +160,7 @@
 
 \begin{frame}
 
-  \vspace{-20mm}
+  \vspace{-25mm}
 % \begin{center}
     \textbf{\color{myred}\Large How to model effects of uncertain model parameters with Uncertainpy}
 % \end{center}
@@ -276,9 +281,9 @@
 %%%%%%%%%%%%%
 
 \begin{frame}{The Hodgkin-Huxley model has three types of \\ion channels}
-
+  \vspace{-5mm}
   \begin{figure}
-    \includegraphics[width=\textwidth]{deterministic_channels.png}
+    \includegraphics[height=0.82\textheight]{deterministic_channels.png}
   \end{figure}
 \end{frame}
 
@@ -538,14 +543,14 @@
 
 
 \begin{frame}[fragile]
-\vspace{-1cm}
+\vspace{-0.3cm}
 \begin{figure}
 \includegraphics[width=1\textwidth]{uncertainpy.png}
 \end{figure}
 
 {\LARGE \bf A Python toolbox for uncertainty quantification}
 
-\vspace{1cm}
+\vspace{0.8cm}
 
 Found at:
 
@@ -559,6 +564,14 @@ Installation:
 \begin{lstlisting}
 pip install uncertainpy
 \end{lstlisting}
+
+
+Preprint found at:
+
+\begin{lstlisting}
+www.biorxiv.org
+ \end{lstlisting}
+
 
 \end{frame}
 
@@ -624,6 +637,22 @@ def hodgin_huxley(gbar_Na, gbar_K, gbar_l):
 %   Frame   %
 %%%%%%%%%%%%%
 
+\begin{frame}[fragile]
+
+\begin{lstlisting}
+UQ = un.UncertaintyQuantification(
+    (*@\texttt{\textcolor{listingsstringcolor}{model=hodgin\_huxley}}@*),
+    parameters=...
+)
+\end{lstlisting}
+% (*@\texttt{\textcolor{listingsbasiccolor}{\textcolor<3>{red}{parameters}}}@*)
+\end{frame}
+
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
 \begin{frame}[fragile]{Uncertainpy has support for multi-compartmental models
   \onslide<2>{and network models}}
   \vspace{-2mm}
@@ -662,14 +691,25 @@ normal_distribution = cp.Normal(12, 2)
   \begin{onlyenv}<3>
     \begin{lstlisting}
 parameters = {                       # Original
-  "gbar_Na": cp.Uniform(100, 140),   # 120
-  "gbar_K": cp.Uniform(32, 40),      # 36
-  "gbar_l": cp.Uniform(0.2, 0.4)     # 0.3
+  "gbar_Na": cp.Uniform(60, 180),    # 120
+  "gbar_K": cp.Uniform(18, 54),      # 36
+  "gbar_l": cp.Uniform(0.15, 0.45)   # 0.3
 }
-    \end{lstlisting}
+\end{lstlisting}
   \end{onlyenv}
 \end{frame}
 
+
+\begin{frame}[fragile]
+
+\begin{lstlisting}
+UQ = un.UncertaintyQuantification(
+    model=hodgkin_huxley,
+    (*@\texttt{\textcolor{listingsstringcolor}{parameters=parameters}}@*),
+)
+  \end{lstlisting}
+  % (*@\texttt{\textcolor{listingsbasiccolor}{\textcolor<3>{red}{parameters}}}@*)
+\end{frame}
 
 %%%%%%%%%%%%%
 %   Frame   %
@@ -682,11 +722,7 @@ UQ = un.UncertaintyQuantification(
     model=hodgkin_huxley,
     parameters=parameters
 )
-\end{lstlisting}
 
-\pause
-
-\begin{lstlisting}
 results = UQ.quantify()
 \end{lstlisting}
 
@@ -707,15 +743,15 @@ results = UQ.quantify()
 
 \begin{lstlisting}
 def hodgin_huxley(gbar_Na, gbar_K, gbar_l):
-  # Calculate the membrane potential using
-  # gbar_Na, gbar_K and gbar_l
+    # Calculate the membrane potential using
+    # gbar_Na, gbar_K and gbar_l
 
-  return time, membrane_potential
+    return time, membrane_potential
 
 parameters = {                       # Original
-  "gbar_Na": cp.Uniform(100, 140),   # 120
-  "gbar_K": cp.Uniform(32, 40),      # 36
-  "gbar_l": cp.Uniform(0.2, 0.4)}    # 0.3
+  "gbar_Na": cp.Uniform(60, 180),    # 120
+  "gbar_K": cp.Uniform(18, 54),      # 36
+  "gbar_l": cp.Uniform(0.15, 0.45)}  # 0.3
 
 UQ = un.UncertaintyQuantification(
     model=hodgkin_huxley,
@@ -898,7 +934,7 @@ results = UQ.quantify()
 UQ = un.UncertaintyQuantification(
     model=hodgkin_huxley,
     parameters=parameters,
-    features=un.SpikingFeatures()
+    (*@\texttt{\textcolor{listingsstringcolor}{features=un.SpikingFeatures()}}@*)
 )
   \end{lstlisting}
 
@@ -936,14 +972,39 @@ def nr_spikes(time, membrane_potential):
 UQ = un.UncertaintyQuantification(
     model=hodgkin_huxley,
     parameters=parameters,
-    features=[nr_spikes, feature_function_2]
+    (*@\texttt{\textcolor{listingsstringcolor}{features=[nr\_spikes, spike\_rate]}}@*)
 )
   \end{lstlisting}
 \end{frame}
 
 
 
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
 
+\begin{frame}{The number of spikes of the Hodgkin-Huxley model}
+  \vspace{-5mm}
+
+  \begin{figure}
+      \includegraphics[width=1\textwidth]{nr_spikes.png}
+  \end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+\begin{frame}{Sensitivity of the number of spikes of the Hodgkin-Huxley model}
+  \vspace{-5mm}
+
+  \begin{figure}
+      \includegraphics[width=1\textwidth]{nr_spikes_sensitivity.png}
+  \end{figure}
+
+\end{frame}
 
 
 %%%%%%%%%%%%%

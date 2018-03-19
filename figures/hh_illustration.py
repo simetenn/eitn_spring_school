@@ -7,6 +7,9 @@ import seaborn as sns
 from HodgkinHuxley import HodgkinHuxley
 from prettyplot import prettyPlot, set_xlabel, set_ylabel, get_colormap
 from prettyplot import fontsize, labelsize, titlesize, spines_color, set_style
+from prettyplot import prettyBar, get_colormap_tableu20
+
+# Logo colors
 
 
 # Logo colors
@@ -121,7 +124,8 @@ model = HodgkinHuxley()
 
 # Perform the uncertainty quantification
 UQ = un.UncertaintyQuantification(model=model,
-                                  parameters=parameters)
+                                  parameters=parameters,
+                                  features=un.SpikingFeatures())
 data = UQ.quantify(plot=None, nr_pc_mc_samples=10**3, save=False)
 
 
@@ -304,3 +308,52 @@ for i in range(0, grid_x_size*grid_y_size):
 
 plt.tight_layout()
 plt.savefig("sensitivity_all.png")
+
+
+
+###############################
+#   Nr spikes                 #
+###############################
+
+width = 0.2
+distance = 0.5
+
+xlabels = ["Mean", "Variance", "$P_5$", "$P_{95}$"]
+xticks = [0, width, distance + width, distance + 2*width]
+
+values = [data["nr_spikes"].mean, data["nr_spikes"].variance,
+          data["nr_spikes"].percentile_5, data["nr_spikes"].percentile_95]
+
+ylabel = data.get_labels("nr_spikes")[0]
+
+ax = prettyBar(values,
+               index=xticks,
+               xlabels=xlabels,
+               ylabel=ylabel.capitalize(),
+               palette=get_colormap_tableu20(),
+               style="seaborn-white")
+
+
+plt.savefig("nr_spikes.png")
+
+
+
+xlabels = [r"Potassium conductance $\bar{g}_\mathrm{K}$", r"Sodium conductance $\bar{g}_\mathrm{Na}$", r"Leak conductance $\bar{g}_\mathrm{l}$"]
+
+xticks = [0, width + 0.1, 2*(width + 0.1)]
+
+
+values = [data["nr_spikes"].mean, data["nr_spikes"].variance,
+          data["nr_spikes"].percentile_5, data["nr_spikes"].percentile_95]
+
+ylabel = data.get_labels("nr_spikes")[0]
+
+ax = prettyBar(data["nr_spikes"].sobol_first,
+               index=xticks,
+               xlabels=xlabels,
+               ylabel="Sensitivity",
+               palette=colors,
+               style="seaborn-white")
+
+plt.savefig("nr_spikes_sensitivity.png")
+plt.show()
