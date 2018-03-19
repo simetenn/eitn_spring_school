@@ -715,7 +715,8 @@ UQ = un.UncertaintyQuantification(
 %   Frame   %
 %%%%%%%%%%%%%
 
-\begin{frame}[fragile]{We perform the uncertainty calculations with \lstinline|quantify()|}
+\begin{frame}[fragile]{We perform the uncertainty calculations \\
+                       with \lstinline|quantify()|}
 
 \begin{lstlisting}
 UQ = un.UncertaintyQuantification(
@@ -1054,6 +1055,78 @@ UQ = un.UncertaintyQuantification(
 
 \end{frame}
 
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+\begin{frame}
+\end{frame}
+
+
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+\begin{frame}{Membrane potential of a thalamic interneuron}
+  \vspace{-5mm}
+
+  \begin{figure}
+      \includegraphics[width=1\textwidth]{lgn.png}
+  \end{figure}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+\begin{frame}{Membrane potential of a thalamic interneuron}
+  \vspace{-5mm}
+
+  \begin{figure}
+      \includegraphics[width=1\textwidth]{lgn_results.png}
+  \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+
+\begin{frame}[fragile]{Results are saved and loaded with the \lstinline|Data| class}
+
+\begin{lstlisting}
+results = un.Data()
+results.load("filename")
+
+mean = results["nr_spikes"].mean
+variance = results["nr_spikes"].variance
+\end{lstlisting}
+\end{frame}
+
+
+
+
+%%%%%%%%%%%%%
+%   Frame   %
+%%%%%%%%%%%%%
+
+
+\begin{frame}[fragile]{NEURON models can be used with the \\
+                       \lstinline|NeuronModel| class}
+
+  \begin{lstlisting}
+model = un.NeuronModel(
+    path="path/to/neuron_model",
+    adaptive=True,
+    stimulus_start=1000,
+    stimulus_end=1900
+)
+  \end{lstlisting}
+\end{frame}
 
 
 \end{document}
